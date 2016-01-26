@@ -102,4 +102,13 @@ class ProcessesController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+	
+	public function getClazzes(){
+		$this->autoRender = false;
+		$this->response->type('json');
+		
+		$clazzes = $this->Processes->Clazzes->find("all");
+		
+		$this->response->body(json_encode($clazzes));
+	}
 }
