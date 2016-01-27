@@ -107,7 +107,8 @@ class ProcessesController extends AppController
 	public function getClazzes(){
 		$this->autoRender = false;
 		$this->response->type('json');
-		$clazzes = $this->Processes->Clazzes->getAllClazzesRecursive();		
+		//$clazzes = $this->Processes->Clazzes->getAllClazzesRecursive();
+		$clazzes = $this->Processes->Clazzes->getAllClazzesNotTeachers();
 		$this->response->body(json_encode($clazzes, JSON_PRETTY_PRINT));
 	}
 }

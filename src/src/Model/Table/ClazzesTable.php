@@ -6,6 +6,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
 
 /**
  * Clazzes Model
@@ -113,5 +114,25 @@ class ClazzesTable extends Table
 					return $q->select(['id', 'name', 'address', 'capacity']);
 				}
 			])->hydrate(false)->toArray();
+	}
+	
+	public function getAllClazzesNotTeachers(){
+		$clazzesTemp = $this
+			->find('all')
+			->contain([
+				'Teachers' => function($q) {
+					return $q->select(['id', 'registry', 'url_lattes', 'entry_date', 'formation', 'workload', 'about', 'rg', 'cpf', 'birth_date', 'situation']);
+				}
+			])
+			->hydrate(false)->toArray();
+			
+		$clazzes = [];
+		foreach($clazzesTemp as $clazzTemp){
+			if($clazzTemp['teachers'] == null){
+				$clazzes[] = $clazzTemp;
+			}
+		}
+		
+		return $clazzes;
 	}
 }
