@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Processes Controller
@@ -106,9 +107,7 @@ class ProcessesController extends AppController
 	public function getClazzes(){
 		$this->autoRender = false;
 		$this->response->type('json');
-		
-		$clazzes = $this->Processes->Clazzes->find("all");
-		
-		$this->response->body(json_encode($clazzes));
+		$clazzes = $this->Processes->Clazzes->getAllClazzesRecursive();		
+		$this->response->body(json_encode($clazzes, JSON_PRETTY_PRINT));
 	}
 }
